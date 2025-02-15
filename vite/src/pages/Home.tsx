@@ -1,9 +1,12 @@
-import { usePosts } from '@/services/query.service';
+import { usePosts, useCreatePost } from '../services/post.service';
+import { useUser } from '../services/auth.service';
 
 export const Home = () => {
-  const { posts, isLoading } = usePosts();
+  const { user, isLoading: userLoading } = useUser();
+  const { posts, isLoading: postsLoading } = usePosts();
+  const { createPost, isPending: createLoading, error: createError } = useCreatePost();
 
-  if (isLoading) return (
+  if (userLoading || postsLoading) return (
     <div className="min-h-screen bg-[#1a1b1e] text-white flex items-center justify-center">
       Loading...
     </div>
@@ -24,6 +27,8 @@ export const Home = () => {
             </div>
           ))}
         </div>
+        {createLoading && <p>Creating post...</p>}
+        {createError && <p>Error: {createError.message}</p>}
       </div>
     </div>
   );

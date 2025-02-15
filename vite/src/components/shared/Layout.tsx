@@ -11,7 +11,7 @@ export const Layout = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1a1b1e] text-white">
+    <div className="min-h-screen">
       <nav className="border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link to="/" className="text-xl font-bold">

@@ -1,4 +1,4 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
+    import axios, { InternalAxiosRequestConfig } from 'axios';
 import { config } from '@/config';
 import { AuthResponse, Post, User } from '@/types/api.types';
 
