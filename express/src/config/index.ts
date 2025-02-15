@@ -7,6 +7,7 @@ const env = cleanEnv(process.env, {
   PORT: port(),
   MONGODB_URI: url(),
   JWT_SECRET: str(),
+  JWT_EXPIRATION_TIME: str(),
   NODE_ENV: str({ choices: ['development', 'test', 'production'] }),
   FRONTEND_URL: url(),
   SMTP_HOST: str({ default: 'smtp.gmail.com' }),
@@ -23,7 +24,7 @@ export const config = {
   },
   jwt: {
     secret: env.JWT_SECRET,
-    expiresIn: '24h',
+    expiresIn: env.JWT_EXPIRATION_TIME,
   },
   cors: {
     origin: env.FRONTEND_URL,

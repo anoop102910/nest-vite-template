@@ -7,6 +7,7 @@ import { HTTP_STATUS } from "../utils/httpStatus";
 import crypto from "crypto";
 import { emailService } from "../services/email.service";
 import { CodeEnum } from "../utils/CodeEnum";
+import { config } from "../config";
 export class AuthService {
   private userDao: UserDao;
 
@@ -82,7 +83,7 @@ export class AuthService {
   }
 
   private generateToken(userId: string): string {
-    return jwt.sign({ userId }, process.env.JWT_SECRET || "your-secret-key", { expiresIn: "24h" });
+    return jwt.sign({ userId }, config.jwt.secret as string, { expiresIn: config.jwt.expiresIn as string });
   }
 
   private async resendVerificationEmail(user: IUser) {

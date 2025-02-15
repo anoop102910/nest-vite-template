@@ -17,7 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | undefined>(undefined);
   const navigate = useNavigate();
 
   const isTokenValid = (token: string) => {
@@ -26,6 +26,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const currentTime = Date.now() / 1000;
       
       if (decoded.exp < currentTime) {
+        console.log("Token has expired");
         // Token has expired
         return false;
       }
@@ -41,10 +42,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const initAuth = async () => {
       try {
         const token = localStorage.getItem('token');
+        console.log(token);
         if (token && isTokenValid(token)) {
+          console.log("Token is valid");
           setIsAuthenticated(true);
         } else {
-          // Token is either missing or invalid/expired
+          console.log("Token is invalid");
           localStorage.removeItem('token');
           setIsAuthenticated(false);
         }

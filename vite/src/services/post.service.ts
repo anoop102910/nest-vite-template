@@ -7,7 +7,8 @@ export const usePosts = () => {
     queryKey: ['posts'],
     queryFn: apiService.posts.getAll,
   });
-  return { posts: data, ...rest };
+  console.log(data);
+  return { postsData: data, ...rest };
 };
 
 export const useCreatePost = () => {

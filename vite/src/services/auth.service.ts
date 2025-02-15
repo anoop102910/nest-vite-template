@@ -13,7 +13,7 @@ export const useLogin = () => {
   const { mutate: login, ...rest } = useCustomMutation({
     mutationFn: apiService.auth.login,
     onSuccess: (data) => {
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.data.token);
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });

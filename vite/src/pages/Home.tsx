@@ -3,17 +3,26 @@ import { useUser } from '../services/auth.service';
 
 export const Home = () => {
   const { user, isLoading: userLoading } = useUser();
-  const { posts, isLoading: postsLoading } = usePosts();
+  const { postsData, isLoading: postsLoading, error: postsError } = usePosts();
   const { createPost, isPending: createLoading, error: createError } = useCreatePost();
+  const posts = postsData?.data;
+
+  console.log(posts)
 
   if (userLoading || postsLoading) return (
-    <div className="min-h-screen bg-[#1a1b1e] text-white flex items-center justify-center">
+    <div className="min-h-screen  flex items-center justify-center">
       Loading...
     </div>
   );
 
+  if (postsError) return (
+    <div className="min-h-screen  flex items-center justify-center">
+      Error: {postsError.message}
+    </div>
+  );
+
   return (
-    <div className="min-h-screen bg-[#1a1b1e] text-white p-6">
+    <div className="min-h-screen p-6">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-2xl font-bold mb-6">Recent Posts</h1>
         <div className="grid gap-4">

@@ -1,8 +1,9 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { useAuth } from '@/services/query.service';
-
+import { useAuth } from '@/context/AuthProvider';
+import { useUser } from '@/services/auth.service';
 export const Layout = () => {
-  const { user } = useAuth();
+  const { user } = useUser();
+  const {isAuthenticated} = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -18,9 +19,9 @@ export const Layout = () => {
             MyApp
           </Link>
           <div className="flex gap-4">
-            {user ? (
+            {isAuthenticated ? (
               <>
-                <span>Welcome, {user.username}</span>
+                <span>Welcome, {user?.username}</span>
                 <button onClick={handleLogout} className="text-red-500">
                   Logout
                 </button>
