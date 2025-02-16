@@ -12,6 +12,11 @@ type ApiPostResponse = {
   data: Post[];
 };
 
+type ApiUserResponse = {
+  status: string;
+  data: User;
+};
+
 const api = axios.create({
   baseURL: config.apiUrl,
   withCredentials: true,
@@ -31,7 +36,7 @@ export const apiService = {
       (await api.post('/auth/login', data)).data,
     register: async (data: { username: string; email: string; password: string }): Promise<ApiAuthResponse> => 
       (await api.post('/auth/register', data)).data,
-    getProfile: async (): Promise<User> => 
+    getProfile: async (): Promise<ApiUserResponse> => 
       (await api.get('/auth/me')).data,
   },
   posts: {

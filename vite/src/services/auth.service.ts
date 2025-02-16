@@ -41,15 +41,15 @@ export const useRegister = () => {
 };
 
 export const useUser = () => {
-  const { data, ...rest } = useCustomQuery({
+  const { data: userData, ...rest } = useCustomQuery({
     queryKey: ['user'],
     queryFn: apiService.auth.getProfile,
     enabled: !!localStorage.getItem('token'),
   });
-  return { user: data, ...rest };
+  return { userData, ...rest };
 };
 
 export const getUser = async () => {
   const response = await apiService.auth.getProfile();
-  return response.data;
+  return response;
 }; 

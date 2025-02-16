@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 
 interface AuthContextType {
-  isAuthenticated: boolean;
+  isAuthenticated: boolean | undefined;
+  setIsAuthenticated: (isAuthenticated: boolean) => void;
   isLoading: boolean;
   logout: () => void;
 }
 
 interface JwtPayload {
   exp: number;
-  // Add other JWT payload fields if needed
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -27,13 +27,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       
       if (decoded.exp < currentTime) {
         console.log("Token has expired");
-        // Token has expired
         return false;
       }
       
       return true;
     } catch (error) {
-      // Token is invalid or couldn't be decoded
       return false;
     }
   };
@@ -71,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value = {
     isAuthenticated,
+    setIsAuthenticated,
     isLoading,
     logout,
   };

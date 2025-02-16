@@ -10,10 +10,16 @@ export interface IUser extends Document {
   emailVerificationExpires?: Date;
   createdAt: Date;
   updatedAt: Date;
+  googleId?: string;
+  displayName?: string;
+  profilePic?: string;
 }
 
 export interface IUserInput {
-  username: string;
-  email: string;
-  password: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  googleId?: string;
+  displayName?: string;
+  profilePic?: string;
 } 

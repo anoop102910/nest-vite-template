@@ -2,12 +2,14 @@ import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthProvider';
 import { useUser } from '@/services/auth.service';
 export const Layout = () => {
-  const { user } = useUser();
-  const {isAuthenticated} = useAuth();
+  const { userData } = useUser();
+  const {isAuthenticated, logout} = useAuth();
   const navigate = useNavigate();
 
+  const user = userData?.data;
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    logout();
     navigate('/login');
   };
 

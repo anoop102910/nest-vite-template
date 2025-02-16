@@ -15,6 +15,11 @@ const env = cleanEnv(process.env, {
   SMTP_USER: str(),
   SMTP_PASS: str(),
   FROM_EMAIL: str(),
+  GOOGLE_CLIENT_ID: str(),
+  GOOGLE_CLIENT_SECRET: str(),
+  GOOGLE_CALLBACK_URL: url(),
+  GOOGLE_SUCCESS_REDIRECT: url(),
+  GOOGLE_FAILURE_REDIRECT: url(),
 });
 
 export const config = {
@@ -39,4 +44,11 @@ export const config = {
     },
     from: env.FROM_EMAIL,
   },
-} as const; 
+  google: {
+    clientId: env.GOOGLE_CLIENT_ID,
+    clientSecret: env.GOOGLE_CLIENT_SECRET,
+    callbackUrl: env.GOOGLE_CALLBACK_URL,
+    successRedirect: env.GOOGLE_SUCCESS_REDIRECT,
+    failureRedirect: env.GOOGLE_FAILURE_REDIRECT,
+  },
+} as const;

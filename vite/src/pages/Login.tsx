@@ -13,6 +13,9 @@ import {
 } from "@/components/ui/form";
 import { toast } from "react-hot-toast";
 import { AxiosError } from "axios";
+import { useAuth } from "@/context/AuthProvider";
+import { config } from "@/config";
+
 interface LoginFormData {
   email: string;
   password: string;
@@ -22,7 +25,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const { login, isPending, error } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
-
+  const { setIsAuthenticated } = useAuth();
   const form = useForm<LoginFormData>({
     defaultValues: {
       email: "",
@@ -32,7 +35,10 @@ export const Login = () => {
 
   const onSubmit = (data: LoginFormData) => {
     login(data, {
-      onSuccess: () => navigate("/"),
+      onSuccess: () => {
+        setIsAuthenticated(true);
+        navigate("/");
+      },
       onError: error => {
         if (error instanceof AxiosError) {
           toast.error(error.response?.data.message);
@@ -42,6 +48,10 @@ export const Login = () => {
         }
       },
     });
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = `${config.apiUrl}/api/auth/google`;
   };
 
   return (
@@ -132,7 +142,7 @@ export const Login = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <button className="flex items-center justify-center gap-2 py-2.5 border rounded-lg hover:bg-gray-50 transition">
+              <button onClick={handleGoogleLogin} className="flex items-center justify-center gap-2 py-2.5 border rounded-lg hover:bg-gray-50 transition">
                 <img src="/google.svg" alt="Google" className="w-5 h-5" />
                 <span>Google</span>
               </button>

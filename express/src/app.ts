@@ -7,6 +7,9 @@ import { HTTP_STATUS } from './utils/httpStatus';
 import authRoutes from './authModule/auth.routes';
 import { ApiError } from './utils/ApiError';
 import postRoutes from './postModule/post.routes';
+import { PassportConfig } from './authModule/passport.config';
+import passport from 'passport';
+import session from 'express-session';
 
 const app: Express = express();
 
@@ -21,6 +24,14 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Passport config
+PassportConfig.initialize();
+app.use(
+  session({ secret: config.jwt.secret, resave: false, saveUninitialized: true })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use('/api/auth', authRoutes);
